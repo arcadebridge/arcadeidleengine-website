@@ -1,16 +1,16 @@
 # Quickstart
 
-> [!IMPORTANT]
-> Required packages in order for this asset to work
+> [!WARNING]
+> Please import DOTween before the asset in order to work normally. It’s free!
 
-This package depends on DOTween. It’s free so install it before installing this package! If you still have problems, please come to our Discord Server and ask questions first. If you don't have a discord account, you can send a mail: thearcadebridge@gmail.com
+ If you are encountering problems, please come to our Discord server. If you don't have a discord account, you can send an e-mail: thearcadebridge@gmail.com
 
-I hope you like the package, thanks for buying it!
+I hope you like the asset, thanks for buying it!
 
 ---
 
-After importing the package, open the demo scene in 
+After importing the asset, you will see two scenes. `Showcase` scene is all about showing all the features while `Sample Game` scene tries to replicate a typical Arcade Idle game scenario. You can find both of the scenes under the directory below:
+> ArcadeIdleEngine/Demo/_Scenes/
 
-> HyperCasualPack/Demo/Demo.unity
 
-After that you can see how Pickable Collectors, Sellers, Spawners and all those other systems work. In the next section, we’ll explain what every script parameter do, so you have better understand overall. If you are still confused, you can always check the default versions of the systems in their corresponding prefabs.
+You can see how Pickable Collectors, Sellers, Spawners and all other systems work. In the next section, we’ll explain what every script parameter do, so you have better understand overall. If you are still confused, analyze scenes and prefabs to understand how they work. I did my best to simplify as much as possible but because it's an Arcade Idle genre, it gets quite complicated pretty easily.
