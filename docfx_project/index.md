@@ -1,4 +1,4 @@
-# This is the **ARCADE IDLE ENGINE DOCS!**.
-Refer to [Markdown](http://daringfireball.net/projects/markdown/) for how to write markdown files.
+# Hypercasual **ARCADE IDLE ENGINE** User Manual
+
 ## Quick Start Notes:
-1. Add images to the *images* folder if the file is referencing an image.
+Thanks for buying the asset! If you liked it, please head t

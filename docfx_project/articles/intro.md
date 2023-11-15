@@ -5,8 +5,6 @@
 
  If you are encountering problems, please come to our Discord server. If you don't have a discord account, you can send an e-mail: thearcadebridge@gmail.com
 
-I hope you like the asset, thanks for buying it!
-
 ---
 
 After importing the asset, you will see two scenes. `Showcase` scene is all about showing all the features while `Sample Game` scene tries to replicate a typical Arcade Idle game scenario. You can find both of the scenes under the directory below:
