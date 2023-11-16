@@ -1,5 +1,5 @@
 - name: Get started
 - name: Quick Start
   href: ../index.md
-- name: Components
-  href: components.md
+- name: Basic Concepts
+  href: basic-concepts.md

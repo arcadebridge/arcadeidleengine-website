@@ -25,7 +25,8 @@
       "pdf": true,
       "_enableSearch": true,
       "_disableContribution": true,
-      "_disableTocFilter": true
+      "_disableTocFilter": true,
+      "_disableNavbar": true
     },
     "fileMetadataFiles": [],
     "template": [
