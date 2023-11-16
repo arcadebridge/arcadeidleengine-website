@@ -18,7 +18,12 @@
       }
     ],
     "output": "_site",
-    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appTitle": "Arcade Idle Engine",
+      "_appName": "Arcade Idle Engine",
+      "_appFooter": "<span>Made by the <a href=\"https://www.arcadebridge.dev/\">Arcade Bridge</a>.",
+      "pdf": true
+    },
     "fileMetadataFiles": [],
     "template": [
       "default",
