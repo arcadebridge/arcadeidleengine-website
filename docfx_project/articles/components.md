@@ -25,6 +25,7 @@ It mostly works as a tag, but it has an important Pickable Definition asset, whi
 
 It sells desired pickables by using their sell value and sellable properties. There are 2 kinds of Sellers. One is **`Pickable Seller Floating Text`** and the other is **`Pickable Seller Floating Image`**
 
+
 ## ResourceMonitorVisualizer
 
 Contains pooled object and resource to modify when we earn stuff. It's a pretty common effect where when you earn money, money image appears on the screen and goes to the money UI (usually it sits at the top of the screen).     
@@ -41,4 +42,14 @@ ResourceTargetImage is for registering the object to the scriptable object so Re
 
 
 ## PickableSourceSpawner
+
+Spawns Pickable gameObjects using a pool. Can be configured by adjusting properties like spawnInterval and pickingTime.
+
+
+## PickableDefinition
+
+kopkop
+
+
+## PickableCollectorStockpiler
 
