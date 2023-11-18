@@ -50,7 +50,7 @@ Spawns Pickable gameObjects using a pool. Can be configured by adjusting propert
 
 
 ## PickableDefinition
-kopkop
+kopkopkk
 
 
 ## PickableCollectorStockpiler
