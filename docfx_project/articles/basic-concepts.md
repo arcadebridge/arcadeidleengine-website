@@ -58,4 +58,4 @@ The script defines a class responsible for collecting, modifying, and stockpilin
 
 
 ## PickableCollectorMultipleCondition
-Same as the PickableCollectorStockpiler
+Same as the PickableCollectorStockpiler but
