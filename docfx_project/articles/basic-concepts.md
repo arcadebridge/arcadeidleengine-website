@@ -29,7 +29,7 @@ You can also extend classes to create your own implementation by creating your o
 
 
 ## Pickables
-Everything that can be picked (thus pickable) can become `Pickable`. In order to mark a GameObject as a Pickable, just add a Pickable component to the GameObject. It mostly works as a tag, but it has an important Pickable Definition asset, which contains things like visibility properties (which sets whether it should be visible or not when we pick it), sellable (whether it can be sellable) and sprite (in order to use it in the UI). Most of the other systems require Pickable type. You can sell, modify, spawn Pickables.
+Everything that can be picked (thus pickable) can become `Pickable`. In order to mark a GameObject as a Pickable, just add a Pickable component to the GameObject. It mostly works as a tag, but it has an important Pickable Definition asset, which contains things like visibility properties (which sets whether it should be visible or not when we pick it), sellable (whether it can be sellable) and sprite (in order to use it in the UI). Most of the other systems require Pickable type. You can **sell**, **spawn**, and **modify** Pickables.
 
 
 ### Selling Pickables
@@ -42,8 +42,7 @@ Some `IntVariable` are treated with extra stuff and they are called `Resource`. 
 `PickableSourceSpawner` spawns Pickables using a pool. It can be then collected by a GameObject that has `InventoryManager` component.
 
 
-
-## PickableCollectorStockpiler
+### Modifying Pickables
 The script defines a class responsible for collecting, modifying, and stockpiling pickable items based on specified rules and timers. It manages the flow of items between unmodified and modified states, with an upgradeable work speed affecting the modification process. The class employs coroutines and timers to control item collection and processing.
 
 
