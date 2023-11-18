@@ -12,7 +12,7 @@ Saving tool list is more complex because it's needed to save their indexes. `Uni
 You can also extend classes to create your own implementation by creating your own custom implementation that derives from `ObjectDatabase` and `IndexLookup` or `Saveable<T>`.
 
 > [!TIP]
-> When working in Unity Editor, you might want to disable the auto-save feature in order to test things quickly. This will prevent creating unnecessary steps to delete save file and re-run the game again in order to load the desired value. For example, when saving the current level, booting scene will be loaded first, and then booting scene will load the scene by using an index that is coming from the current level variable. You need to disable the `Save Automatically` feature in the `Automatic Save Load` gameObject inside the `Booting` scene.
+> When working in Unity Editor, you might want to disable the `Save Automatically` feature in the `Automatic Save Load` GameObject inside the `Booting` scene in order to test things quickly. Otherwise, you would have to delete the save file and set the initial value for the `Current Level` variable to load the desired scene. If you want to learn more, head to the `Booting` section.
 
 > [!TIP]
 > There is also a `SaveUpgrader` class that handles new Save versions. If you need to learn more about this Save Versioning concept, you can find a lot of explanations on the internet.
@@ -24,7 +24,7 @@ Use `Tools > HypercasualPack > Open Save Directory` if you want to delete the sa
 
 
 ## Booting
-Booting is a collection of tools for initializing the game. It waits for the loading save data and possibly other types of initialization too (like SDK initializations, or fetching remote config data). Then `GameBooter` uses `IntVariable` to get the latest current level we are in and use that for loading a new level.
+Booting scene has a collection of GameObjects for initializing the game. It waits for the loading save data (and possibly by your custom scripts other types of initialization too like SDK initializations, or fetching remote config data). Then `GameBooter` uses `IntVariable` to get the latest current level we are in and use that for loading a new level. When you hit play in the Editor (and in the runtime as well) the Booting scene will be loaded first, and then the Booting scene will load the scene by using an index that is coming from the current level variable.
 
 
 ## Pickable
