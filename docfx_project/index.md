@@ -5,7 +5,7 @@
 > [!WARNING]
 > Please import DOTween before the asset in order to work normally. It’s free!
 
- If you are encountering problems, please come to our Discord server. If you don't have a discord account, you can send an e-mail: thearcadebridge@gmail.com
+ If you are encountering problems, please come to our Discord server. If you don't have a discord account, you can send an e-mail: `thearcadebridge@gmail.com`
 
 ---
 
