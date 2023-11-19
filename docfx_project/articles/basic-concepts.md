@@ -25,7 +25,7 @@ You can also extend classes to create your own implementation by creating your o
 
 
 ## IntVariableMonitor     
-`IntVariableMonitor`` is for updating the text based on the variable it listens to. These are usually coin, money, or resources.
+`IntVariableMonitor` is for updating the text based on the variable it listens to. These are usually coin, money, or resources.
 
 
 ## Pickables
