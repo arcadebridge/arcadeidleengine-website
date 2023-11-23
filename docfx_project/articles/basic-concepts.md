@@ -72,7 +72,7 @@ The Level Generation system comprises components such as `LevelGenerator`, `Leve
 
 Each entry in the LevelGenerator represents a distinct world. You can have as many different levels as needed. When generating a new level, specify the desired level to create. In the example above, there are 2 levels.
 
-![Level Generator Definition](../images/level-generator-definition.png)
+![Level Generator Definition](../images/level-generator-definition.png){ width="800" height="300" style="display: block; margin: 0 auto" }
 
 Each element in LevelGeneratorDefinition corresponds to the difficulty level. In the example above:
 
