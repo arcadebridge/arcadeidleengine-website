@@ -1,13 +1,26 @@
-# Basic Concepts
+# Concepts
 
-These are the basic concepts to really understand what is going on behind the scenes. Every system is departmentalized into its own section.
+These explanations offer comprehensive insights into the underlying concepts. The systems are intentionally crafted with the assumption that documentation may not be necessary, but this space is available if you find any difficulty in grasping the concepts.
+
+All systems are designed with simplicity, easy extensibility, and maximum isolation in mind, enabling independent use. The codebase has been meticulously constructed for clarity, ensuring that no component engages in unnecessarily complex calculations or enigmatic actions.
+
+
+
+## Actors
+The responsibility of moving characters, primarily the player, though other characters like workers can also utilize it, lies within this system. Components such as `HumanoidAnimationManager` are encompassed here. Additionally, it houses the `InputChannel` for facilitating communication between the UI (Joystick) and the game world (player character).
+
 
 
 ## Booting
-Booting scene has a collection of GameObjects for initializing the game. It waits for the loading save data (and possibly by your custom scripts other types of initialization too like SDK initializations, or fetching remote config data). Then `GameBooter` uses `IntVariable` to get the latest current level we are in and use that for loading a new level. When you hit play in the Editor (and in the runtime as well) the Booting scene will be loaded first, and then the Booting scene will load the scene by using an index that is coming from the current level variable.
+The Booting scene contains a collection of GameObjects responsible for initializing the game. It awaits the loading of save data and potentially other types of initialization, such as SDK initializations or fetching remote config data through custom scripts. Subsequently, the `GameBooter` employs the `IntVariable` to retrieve the latest current level information, utilizing it to load a new level. When you initiate playback in the Editor (and during runtime), the Booting scene takes precedence, loading the scene based on an index derived from the current level variable.
 
 
-## Save System
+
+## Data
+Contains data types and tools to let you store high-level data like score, coin, collected resource count and so on. They can be stored using any `Saveable` class. 
+
+
+### Save System
 Arcade Idle Engine contains a lot of ScriptableObjects, some of them is just plain data holder but others have functionality as well. ScriptableObjects derived from Saveable contain implementation for saving data. These data can be saved and loaded from the disk. Initial value can be set if there isn't any save file. These `Saveable` objects can be saved by `SaveManager` class.
 
 You need to assign Saveables to the `SaveManager` so it can save and load them when the game runs. Use SaveManager to save your game state like collected wood count or money.
@@ -24,32 +37,85 @@ You can also extend classes to create your own implementation by creating your o
 > There is also a `SaveUpgrader` class that handles new save versions. It's usually required when you change the save data. If you need to learn more about this save versioning concept, you can find a lot of explanations on the internet.
 
 
-## IntVariableMonitor     
+## Economy
+Utilizes [Data](#data) system to spend resources (coin, gem, wood). It can animate earning income via `ResourceAnimators`. It can let players spend resource via `ResourceSpender`.
+
+
+
+## Gathering
+Contains tools and gatherable sources which can be anything from trees to ores. You can get creative and invent interesting gathering mechanisms. Because essentially this system lets player produce an item if he has the right tools to gather. So one original idea might be a coffeemaker as a gathering tool and a sack full of coffee bean as a gatherable source. You grind and brew them and you get coffee cups.
+
+For setting custom animations, you can create new state in the `Actor` animator and create a new transition from Entry to Exit with an equality check.
+
+![](../images/interaction-animator.png)
+
+Then assign the `InteractionAnimationId` in the `GatheringToolType`.
+
+![](../images/gathering-tool-type.png)
+
+
+
+## Interactables
+Contains all the objects that can be interactable in the game world. It can be pop-up displayer, or a trigger that collects pickables from inventory when an inventory manager enters the area. 
+
+
+## Intenvory
+
+
+## Level Generation
+
+
+## Monitors
+
+
+
+
+### IntVariableMonitor     
 `IntVariableMonitor` is for updating the text based on the variable it listens to. These are usually coin, money, or resources.
 
 
 ## Pickables
-Everything that can be picked (thus pickable) can become `Pickable`. In order to mark a GameObject as a Pickable, simply add a Pickable component to the GameObject. It mostly works as a tag, but it has an important Pickable Definition asset, which contains things like visibility properties (which sets whether it should be visible or not when we pick it), sellable (whether it can be sellable) and sprite (in order to use it in the UI). Most other systems require the Pickable type. You can **sell**, **spawn**, and **modify** Pickables.
+If something can be picked up, it can be turned into a `Pickable`. To mark an object as pickable, just add a Pickable component to it; think of it like a tag.
+
+There's a significant part called `PickableDefinition`, which includes details like whether the picked item should be visible, if it can be sold, and its image for the UI. Many other systems need this Pickable type.
 
 
-### Selling Pickables
-It sells desired pickables by using their sell value and sellable properties. There are 2 kinds of Sellers. One is **`Pickable Seller Floating Text`** and the other is **`Pickable Seller Floating Image`**
+## Pools
+
+
+## Processors
+
+
+## Tween Feedbacks
+
+
+## Workers
+
+
+
+
+
+
+
+
+
+## Processors
+These are kind of like a machines which processes Pickables. Process can do [selling](#sellers), [spawning](#spawners), or [transforming](#transformers).
+
+
+
+### Sellers
+It sells desired pickables by using their sell value and sellable properties. There are 2 kinds of Sellers. One is `PickableSellerFloatingText` and the other is `PickableSellerFloatingImage`
 
 Some `IntVariable` are treated with extra stuff and they are called `Resource`. These are things like coin, money, wood or so on. You can use `ResourceAnimator` along with the `ResourceTargetImage` to create animated image effect when resource changes. You also need to make sure that the GameObject has the IntVariableMonitor.
 
 
-### Spawning Pickables
+### Spawners
 `PickableSourceSpawner` spawns Pickables using a pool. It can be then collected by a GameObject that has `InventoryManager` component.
 
 
-### Modifying Pickables
+### Transformers
 The script defines a class that is responsible for collecting, modifying, and stockpiling pickable items according to specified rules and timers. This class oversees the transition of items between unmodified and modified states, with the modification process influenced by an upgradeable work speed. It utilizes coroutines and timers to manage item collection and processing.
 
 > [!WARNING]
 > Ensure that the number of text fields in `PickableModifierMultipleCondition` matches the number of input fields in the `MultipleConditionRuleset`. If they do not match, an error will be printed out in the console.
-
-> [!TIP]
-> When modifiers collect pickables, you can't have a jump duration that is shorter than the collecting interval. Because 
-
-## PickableModifierMultipleCondition
-Same as the PickableCollectorStockpiler but
