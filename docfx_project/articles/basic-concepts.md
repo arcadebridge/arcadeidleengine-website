@@ -2,6 +2,7 @@
 
 These explanations offer comprehensive insights into the underlying concepts. The systems are intentionally crafted with the assumption that documentation may not be necessary, but this space is available if you find any difficulty in grasping the concepts.
 
+
 All systems are designed with simplicity, easy extensibility, and maximum isolation in mind, enabling independent use. The codebase has been meticulously constructed for clarity, ensuring that no component engages in unnecessarily complex calculations or enigmatic actions.
 
 
@@ -59,19 +60,32 @@ Then assign the `InteractionAnimationId` in the `GatheringToolType`.
 Contains all the objects that can be interactable in the game world. It can be pop-up displayer, or a trigger that collects pickables from inventory when an inventory manager enters the area. 
 
 
-## Intenvory
+## Inventory
+This section deals with the inventory responsible for storing Pickables. It's designed straightforwardly, eliminating the need for an abstraction layer like an interface for communication. Other systems (e.g. `InventoryFeedingZone` and `InventoryCollectingZone`) directly interact with the `InventoryManager` to add, remove, or get the desired Pickables.
 
+---
 
 ## Level Generation
+The Level Generation system comprises components such as `LevelGenerator`, `LevelGeneratorDefinition`, `Group`, `Tile`, and `Portal`. Additionally, the `LevelGenerationTrigger` is included for initiating new level generation, provided as an example for customization. It's quite straightforward.
+
+![Level Generator](../images/level-generator.png)
+
+Each entry in the LevelGenerator represents a distinct world. You can have as many different levels as needed. When generating a new level, specify the desired level to create. In the example above, there are 2 levels.
+
+![Level Generator Definition](../images/level-generator-definition.png)
+
+Each element in LevelGeneratorDefinition corresponds to the difficulty level. In the example above:
+
+    Element 0 = difficulty 0
+    Elemnt 1 = difficulty 1
+
+If there's more than one entry inside the Group in the Element, a random one within that Group will be chosen. You can also specify a Group for the end of the level (e.g., a boss), and which tile to use when spawning all the groups.
+
 
 
 ## Monitors
+These are basic objects that visually represent data, usually through a text object within a Canvas. They actively listen for changes in the variables they are monitoring and automatically update their displayed values accordingly.
 
-
-
-
-### IntVariableMonitor     
-`IntVariableMonitor` is for updating the text based on the variable it listens to. These are usually coin, money, or resources.
 
 
 ## Pickables
@@ -80,22 +94,9 @@ If something can be picked up, it can be turned into a `Pickable`. To mark an ob
 There's a significant part called `PickableDefinition`, which includes details like whether the picked item should be visible, if it can be sold, and its image for the UI. Many other systems need this Pickable type.
 
 
+
 ## Pools
-
-
-## Processors
-
-
-## Tween Feedbacks
-
-
-## Workers
-
-
-
-
-
-
+These are generic implementations of pools. It's crucial to use them instead of frequently using Instantiate and Destroy because doing so would put unnecessary strain on the CPU and memory, resulting in additional garbage in the memory.
 
 
 
@@ -115,7 +116,20 @@ Some `IntVariable` are treated with extra stuff and they are called `Resource`. 
 
 
 ### Transformers
-The script defines a class that is responsible for collecting, modifying, and stockpiling pickable items according to specified rules and timers. This class oversees the transition of items between unmodified and modified states, with the modification process influenced by an upgradeable work speed. It utilizes coroutines and timers to manage item collection and processing.
+The script defines a class that is responsible for collecting, modifying, and stockpiling pickable items according to specified rules and timers. This class manages the transition of items between unmodified and modified states, with the modification process influenced by an upgradeable work speed. It utilizes coroutines and timers to manage item collection and processing.
 
 > [!WARNING]
-> Ensure that the number of text fields in `PickableModifierMultipleCondition` matches the number of input fields in the `MultipleConditionRuleset`. If they do not match, an error will be printed out in the console.
+> Ensure that the number of text fields in `PickableTransformerMultipleCondition` matches the number of input fields in the `MultipleConditionRuleset`. If they do not match, an error will be printed out in the console.
+
+---
+
+
+## Tween Feedbacks
+Simple scripts that allows you to define any custom feedback effects. You can create new feedback effects by changing the properties, or implementing new behaviours by deriving from `TweenFeedback`. It's mostly used in [gathering](#gathering), when chopping trees for example.
+
+---
+
+## Workers
+Workers can be spawned using `WorkerManager`. You can controll all the workers who has been spawned from the same manager. In the asset, you can see two most common features, pausing and resuming all the workers.
+
+There are two different versions of workers, one has the extra `PickableGatherer` so they can gather gatherables. Create new worker prefabs and assign them to the WorkerManager's so you can spawn and control them.
