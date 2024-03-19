@@ -13,12 +13,14 @@ The responsibility of moving characters, primarily the player, though other char
 
 
 ## Booting
-The Booting scene contains a collection of GameObjects responsible for initializing the game. It awaits the loading of save data and potentially other types of initialization, such as SDK initializations or fetching remote config data through custom scripts. Subsequently, the `GameBooter` employs the `IntVariable` to retrieve the latest current level information, utilizing it to load a new level. When you initiate playback in the Editor (and during runtime), the Booting scene takes precedence, loading the scene based on an index derived from the current level variable.
+The Booting scene contains a collection of GameObjects responsible for initializing the game. It loads save data and potentially runs other types' initializations, such as SDK initializations or fetching remote config data. `GameBooter` waits for all this and then loads a level. When you initiate playback in the Editor (and during runtime), if ``Load Booting Scene First`` menu item is enabled, then it will load booting scene first and then loads the level you were currently in.
+
+![Load Booting Scene First](../images/load-booting-scene-first.png)
 
 
 
 ## Data
-Contains data types and tools to let you store high-level data like score, coin, collected resource count and so on. They can be stored using any `Saveable` class. 
+Contains data types and tools to let you store data like score, coin, collected resource count and so on. They can be stored using any `Saveable` class. 
 
 
 ### Save System
@@ -28,7 +30,7 @@ You need to assign Saveables to the `SaveManager` so it can save and load them w
 Use `Tools > HypercasualPack > Open Save Directory` if you want to delete the save file or modify it manually.
 
 > [!TIP]
-> When working in Unity Editor, you might want to disable the `Save Automatically` bool in the `Automatic Save Load` GameObject inside the `Booting` scene in order to test things quickly. Otherwise, you would have to delete the save file and set the initial value for the `Current Level` variable to load the desired scene. If you want to learn more, head to the `Booting` section.
+> When working in Unity Editor, if you enabled ``Load Booting Scene first``you might want to disable the `Save Automatically` bool in the `Automatic Save Load` GameObject inside the `Booting` scene in order to test things without actually saving them. Because otherwise, ``Automatic Save Load`` object will persist between scenes and saves everything when you exit playmode.
 
 Saving tool list is more complex because it's needed to save their indexes. `UniqueIntListVariable` can be used to save their indexes. And then `GatheringToolDefinitionIndexLookup` can be used along with `GatheringToolDatabase` for indexing every gathering tool. 
 
@@ -39,7 +41,7 @@ You can also extend classes to create your own implementation by creating your o
 
 
 ## Economy
-Utilizes [Data](#data) system to spend resources (coin, gem, wood). It can animate earning income via `ResourceAnimators`. It can let players spend resource via `ResourceSpender`.
+Utilizes [Data](#data) system to spend resources (coin, gem, wood). It can animate earning income via `ResourceAnimators`.
 
 
 
@@ -57,11 +59,11 @@ Then assign the `InteractionAnimationId` in the `GatheringToolType`.
 
 
 ## Interactables
-Contains all the objects that can be interactable in the game world. It can be pop-up displayer, or a trigger that collects pickables from inventory when an inventory manager enters the area. 
+Contains all the objects that can be interactable in the game world. It can be pop-up displayer, or a trigger that collects items from inventory when an inventory manager enters the area. 
 
 
 ## Inventory
-This section deals with the inventory responsible for storing Pickables. It's designed straightforwardly, eliminating the need for an abstraction layer like an interface for communication. Other systems (e.g. `InventoryFeedingZone` and `InventoryCollectingZone`) directly interact with the `InventoryManager` to add, remove, or get the desired Pickables.
+Nearly every system relies on the inventory. Spawner spawns items into the inventory, Transformer gets item from one and produces an output to the other. Systems like `InventoryFeederTriggerArea` and `InventoryCollectorTriggerArea` directly interact with the `Inventory` to add, remove, or get the desired Items.
 
 ---
 
@@ -83,14 +85,21 @@ If there's more than one entry inside the Group in the Element, a random one wit
 
 
 ## Monitors
+
+### UI Monitors
 These are basic objects that visually represent data, usually through a text object within a Canvas. They actively listen for changes in the variables they are monitoring and automatically update their displayed values accordingly.
 
+### Timer Monitors
+Displays time information to the player via images. It's so easy to create your own monitor that presents information in a different way.
+
+### Count Monitors
+Displays count information. It is used with the inventory to show what item it contains and how many.
 
 
-## Pickables
-If something can be picked up, it can be turned into a `Pickable`. To mark an object as pickable, just add a Pickable component to it; think of it like a tag.
+## Items
+If something can be picked up, it can be turned into a `Item`. To mark an object as Item, just add a Item component to it; think of it like a tag.
 
-There's a significant part called `PickableDefinition`, which includes details like whether the picked item should be visible, if it can be sold, and its image for the UI. Many other systems need this Pickable type.
+There's a significant part called `ItemDefinition`, which includes details like whether the picked item should be visible, if it can be sold, and its image for the UI. Many other systems need this Item type.
 
 
 
@@ -100,35 +109,32 @@ These are generic implementations of pools. It's crucial to use them instead of 
 
 
 ## Processors
-These are kind of like a machines which processes Pickables. Process can do [selling](#sellers), [spawning](#spawners), or [transforming](#transformers).
+These are kind of like a machines which processes Items. Process can do [selling](#sellers), [spawning](#spawners), or [transforming](#transformers).
 
 
 
 ### Sellers
-It sells desired pickables by using their sell value and sellable properties. There are 2 kinds of Sellers. One is `PickableSellerFloatingText` and the other is `PickableSellerFloatingImage`
+It sells desired Items by using their sell value and sellable properties. There are 2 kinds of Sellers. One is `ItemSellerFloatingText` and the other is `ItemSellerFloatingImage`
 
 Some `IntVariable` are treated with extra stuff and they are called `Resource`. These are things like coin, money, wood or so on. You can use `ResourceAnimator` along with the `ResourceTargetImage` to create animated image effect when resource changes. You also need to make sure that the GameObject has the IntVariableMonitor.
 
 
 ### Spawners
-`PickableSourceSpawner` spawns Pickables using a pool. It can be then collected by a GameObject that has `InventoryManager` component.
+`ItemSourceSpawner` spawns Items using a pool. It can be then collected by a GameObject that has `InventoryManager` component.
 
 
 ### Transformers
-The script defines a class that is responsible for collecting, modifying, and stockpiling pickable items according to specified rules and timers. This class manages the transition of items between unmodified and modified states, with the modification process influenced by an upgradeable work speed. It utilizes coroutines and timers to manage item collection and processing.
+The script defines a class that is responsible for collecting, modifying, and stockpiling items according to specified rules and timers. This class manages the transition of items between unmodified and modified states, with the modification process influenced by an upgradeable work speed. It utilizes coroutines and timers to manage item collection and processing.
 
 > [!WARNING]
-> Ensure that the number of text fields in `PickableTransformerMultipleCondition` matches the number of input fields in the `MultipleConditionRuleset`. If they do not match, an error will be printed out in the console.
+> Ensure that the number of text fields in `ItemTransformerMultipleCondition` matches the number of input fields in the `MultipleConditionRuleset`. If they do not match, an error will be printed out in the console.
 
----
-
-
-## Tween Feedbacks
-Simple scripts that allows you to define any custom feedback effects. You can create new feedback effects by changing the properties, or implementing new behaviours by deriving from `TweenFeedback`. It's mostly used in [gathering](#gathering), when chopping trees for example.
-
----
 
 ## Workers
 Workers can be spawned using `WorkerManager`. You can controll all the workers who has been spawned from the same manager. In the asset, you can see two most common features, pausing and resuming all the workers.
 
-There are two different versions of workers, one has the extra `PickableGatherer` so they can gather gatherables. Create new worker prefabs and assign them to the WorkerManager's so you can spawn and control them.
+There are two different versions of workers, one has the extra `ItemGatherer` so they can gather gatherables. Create new worker prefabs and assign them to the WorkerManager's so you can spawn and control them.
+
+
+## Tween Feedbacks
+Simple scripts that allows you to define any custom feedback effects. You can create new feedback effects by changing the properties, or implementing new behaviours by deriving from `TweenFeedback`. It's mostly used in [gathering](#gathering), when chopping trees for example.
